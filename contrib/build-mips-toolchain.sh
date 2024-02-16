@@ -272,7 +272,6 @@ fi
 cd ../src
 if [ ! -d "gcc-${GCCVERSION}" ] ; then
 tar -xvf ../orig/gcc-${GCCVERSION}.tar.gz
-#tar -xvjf ../orig/gcc-${GCCVERSION}.tar.bz2
 fi 
  
 cd ../build
@@ -291,7 +290,7 @@ LDFLAGS="-Wl,-rpath,$MYMIPS/lib" \
 --disable-libgomp --disable-libmudflap \
 --enable-languages="c"  
 fi
-
+ 
 if [ ! -e "${MYMIPS}/bin/mipsel-none-elf-gcc" ] ; then
 make all-gcc -j4
 make install-gcc
@@ -308,8 +307,7 @@ cd mips/build
 mkdir -p newlib
 cd newlib
 if [ ! -e "config.status" ] ; then
-../../src/newlib-${NEWLIBVERSION}/configure --target=mipsel-none-elf --prefix=$MYMIPS 
-
+../../src/newlib-${NEWLIBVERSION}/configure --prefix=$MYMIPS --target=mipsel-none-elf
 fi
  
 if [ ! -e "${MYMIPS}/mipsel-none-elf/lib/libc.a" ] ; then
