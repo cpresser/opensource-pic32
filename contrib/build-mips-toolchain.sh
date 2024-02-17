@@ -19,13 +19,13 @@ export MYMIPS=/opt/mips-gcc/
 # Versions
 GMPVERSION="6.1.0"
 PPLVERSION="0.12.1"
-BINUTILSVERSION="2.26"
+BINUTILSVERSION="2.28"
 MPFRVERSION="3.1.4"
 MPCVERSION="1.0.3"
 ISLVERSION="0.16.1"
 CLOOGVERSION="0.18.4"
-GCCVERSION="5.3.0"
-NEWLIBVERSION="2.2.0"
+GCCVERSION="6.4.0"
+NEWLIBVERSION="2.5.0.20170623"
 GDBVERSION="7.11"
  
  
@@ -264,14 +264,14 @@ cd ../..
  
 # Get the archives
 cd mips/orig 
-if [ ! -e "gcc-${GCCVERSION}.tar.bz2" ] ; then
-  wget ftp://ftp.halifax.rwth-aachen.de/gnu/gcc/gcc-${GCCVERSION}/gcc-${GCCVERSION}.tar.bz2
+if [ ! -e "gcc-${GCCVERSION}.tar.gz" ] ; then
+  wget ftp://ftp.halifax.rwth-aachen.de/gnu/gcc/gcc-${GCCVERSION}/gcc-${GCCVERSION}.tar.gz
 fi
  
 # Unpack to source directory
 cd ../src
 if [ ! -d "gcc-${GCCVERSION}" ] ; then
-tar -xvjf ../orig/gcc-${GCCVERSION}.tar.bz2
+tar -xvf ../orig/gcc-${GCCVERSION}.tar.gz
 fi 
  
 cd ../build
@@ -296,7 +296,8 @@ make all-gcc -j4
 make install-gcc
 fi
 cd ../../..
- 
+export PATH=$PATH:$MYMIPS/bin
+
 ########################################
 # newlib
 ########################################
@@ -306,7 +307,7 @@ cd mips/build
 mkdir -p newlib
 cd newlib
 if [ ! -e "config.status" ] ; then
-../../src/newlib-${NEWLIBVERSION}/configure --prefix=$MYMIPS --target=mipsel-none-elf 
+../../src/newlib-${NEWLIBVERSION}/configure --prefix=$MYMIPS --target=mipsel-none-elf
 fi
  
 if [ ! -e "${MYMIPS}/mipsel-none-elf/lib/libc.a" ] ; then
